@@ -1,7 +1,10 @@
-FROM alpine
+ARG ALP_VER=3.13
+FROM alpine:$ALP_VER
+
+ARG DIG_VER=2.0.24
 
 RUN apk add --no-cache apk-cron nodejs npm  && rm -rf /var/cache/apk/*
-RUN npm install -g gamedig
+RUN npm install -g gamedig@${DIG_VER}
 
 RUN echo '*/1 * * * * /gamedig.sh > /status.json' > /crontab.txt
 RUN touch /status.json
